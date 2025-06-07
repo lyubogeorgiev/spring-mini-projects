@@ -6,8 +6,8 @@ Multiple small Spring Boot projects for learning and demonstration.
 
 ### Book Catalog REST API
   A simple RESTful API to manage a collection of books. The API supports basic operations like:
-    #### Listing all Books
-    #### Getting a Book by ID
-    #### Adding a new Book
-    #### Updating a Book
-    #### Deleting a Book
+  * Listing all Books
+  * Getting a Book by ID
+  * Adding a new Book
+  * Updating a Book
+  * Deleting a Book
