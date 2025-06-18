@@ -24,15 +24,17 @@ public class BookController {
                 ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler({NotFoundException.class})
+    public ResponseEntity<Void> handleBooksNotFoundException(){
+        return ResponseEntity.notFound().build();
+    }
+
     @GetMapping("/books/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable String id){
-        Book book = this.bookService.getBookById(UUID.fromString(id));
 
-        if(book == null){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(book);
+        return ResponseEntity
+                .ok(this.bookService.getBookById(UUID.fromString(id))
+                        .orElseThrow(NotFoundException::new));
     }
 
     @PostMapping("/books")

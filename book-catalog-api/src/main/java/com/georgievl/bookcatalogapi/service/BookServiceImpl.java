@@ -4,10 +4,7 @@ import com.georgievl.bookcatalogapi.model.Book;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -68,7 +65,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book getBookById(UUID id) {
-        return this.books.get(id);
+    public Optional<Book> getBookById(UUID id) {
+        return Optional.of(this.books.get(id));
     }
 }

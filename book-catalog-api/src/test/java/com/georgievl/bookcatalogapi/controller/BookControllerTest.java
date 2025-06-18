@@ -15,6 +15,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.print.attribute.standard.Media;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,12 +75,20 @@ class BookControllerTest {
     }
 
     @Test
+    void getBeerByIdNotFoundThrowsException() throws Exception {
+        given(bookService.getBookById(any(UUID.class))).willThrow(new NotFoundException());
+
+        mockMvc.perform(get("/api/books/" + UUID.randomUUID())).andExpect(status().isNotFound());
+    }
+
+    @Test
     void getBookById() throws Exception {
 
         Book testBook = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
 
         if(testBook != null){
-            given(bookService.getBookById(UUID.fromString(testBook.getId()))).willReturn(testBook);
+            given(bookService.getBookById(UUID.fromString(testBook.getId())))
+                    .willReturn(Optional.of(testBook));
 
             mockMvc.perform(get("/api/books/" + testBook.getId())
                             .accept(MediaType.APPLICATION_JSON))
