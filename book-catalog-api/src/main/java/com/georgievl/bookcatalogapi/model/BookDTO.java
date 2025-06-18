@@ -1,18 +1,18 @@
 package com.georgievl.bookcatalogapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.UUID;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Book {
+public class BookDTO {
     private String id;
     private String title;
     private String author;
     private String isbn;
-    private int year;
+    private int year_published;
 }

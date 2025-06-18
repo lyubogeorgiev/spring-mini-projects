@@ -1,8 +1,7 @@
 package com.georgievl.bookcatalogapi.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.georgievl.bookcatalogapi.model.Book;
+import com.georgievl.bookcatalogapi.model.BookDTO;
 import com.georgievl.bookcatalogapi.service.BookService;
 import com.georgievl.bookcatalogapi.service.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.print.attribute.standard.Media;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,7 +82,7 @@ class BookControllerTest {
     @Test
     void getBookById() throws Exception {
 
-        Book testBook = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
+        BookDTO testBook = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
 
         if(testBook != null){
             given(bookService.getBookById(UUID.fromString(testBook.getId())))
@@ -98,7 +96,7 @@ class BookControllerTest {
                     .andExpect(jsonPath("$.title", is(testBook.getTitle())))
                     .andExpect(jsonPath("$.author", is(testBook.getAuthor())))
                     .andExpect(jsonPath("$.isbn", is(testBook.getIsbn())))
-                    .andExpect(jsonPath("$.year", is(testBook.getYear())));
+                    .andExpect(jsonPath("$.year_published", is(testBook.getYear_published())));
         }
 
     }
@@ -106,7 +104,7 @@ class BookControllerTest {
     @Test
     void createBook() throws Exception {
 
-        Book testBook = bookServiceImpl.getAllBooks().values().stream().findFirst().isPresent()
+        BookDTO testBook = bookServiceImpl.getAllBooks().values().stream().findFirst().isPresent()
                 ? bookServiceImpl.getAllBooks().values().stream().findFirst().get()
                 : null;
 
@@ -114,7 +112,7 @@ class BookControllerTest {
 
         testBook.setId(null);
 
-        given(bookService.addBook(any(Book.class)))
+        given(bookService.addBook(any(BookDTO.class)))
                 .willReturn(bookServiceImpl.getAllBooks().values().stream().toList().get(1));
 
         mockMvc.perform(post("/api/books")
@@ -127,9 +125,9 @@ class BookControllerTest {
 
     @Test
     void updateBook() throws Exception {
-        Book book = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
+        BookDTO book = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
 
-        given(bookService.updateBook(any(UUID.class), any(Book.class))).willReturn(book);
+        given(bookService.updateBook(any(UUID.class), any(BookDTO.class))).willReturn(book);
 
         mockMvc.perform(put("/api/books/" + book.getId())
                         .accept(MediaType.APPLICATION_JSON)
@@ -138,12 +136,12 @@ class BookControllerTest {
                         .andExpect(status().isOk())
                                 .andExpect(content().json(objectMapper.writeValueAsString(book)));
 
-        verify(bookService).updateBook(any(UUID.class), any(Book.class));
+        verify(bookService).updateBook(any(UUID.class), any(BookDTO.class));
     }
 
     @Test
     void deleteBook() throws Exception {
-        Book book = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
+        BookDTO book = bookServiceImpl.getAllBooks().values().stream().toList().get(0);
 
         given(bookService.deleteBook(any(UUID.class))).willReturn(book);
 

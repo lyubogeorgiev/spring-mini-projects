@@ -1,6 +1,6 @@
 package com.georgievl.bookcatalogapi.controller;
 
-import com.georgievl.bookcatalogapi.model.Book;
+import com.georgievl.bookcatalogapi.model.BookDTO;
 import com.georgievl.bookcatalogapi.service.BookService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/books")
-    public ResponseEntity<Map<UUID, Book>> getBooks(){
+    public ResponseEntity<Map<UUID, BookDTO>> getBooks(){
         return this.bookService.getAllBooks() != null ?
                 ResponseEntity.ok(this.bookService.getAllBooks()) :
                 ResponseEntity.notFound().build();
@@ -30,7 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/books/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable String id){
+    public ResponseEntity<BookDTO> getBookById(@PathVariable String id){
 
         return ResponseEntity
                 .ok(this.bookService.getBookById(UUID.fromString(id))
@@ -38,8 +38,8 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public ResponseEntity<Book> createBook(@RequestBody Book book){
-        Book createdBook = this.bookService
+    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO book){
+        BookDTO createdBook = this.bookService
                 .addBook(book);
 
         URI location = URI.create("/api/books/" + createdBook.getId());
@@ -48,9 +48,9 @@ public class BookController {
     }
 
     @PutMapping("/books/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book book){
+    public ResponseEntity<BookDTO> updateBook(@PathVariable String id, @RequestBody BookDTO book){
 
-        Book updatedBook = this.bookService.updateBook(UUID.fromString(id), book);
+        BookDTO updatedBook = this.bookService.updateBook(UUID.fromString(id), book);
 
         return ResponseEntity.ok(updatedBook);
     }
@@ -58,7 +58,7 @@ public class BookController {
     @DeleteMapping("/books/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable UUID id){
 
-        Book deletedBook = this.bookService.deleteBook(id);
+        BookDTO deletedBook = this.bookService.deleteBook(id);
 
         if(deletedBook == null){
             return ResponseEntity.notFound().build();
