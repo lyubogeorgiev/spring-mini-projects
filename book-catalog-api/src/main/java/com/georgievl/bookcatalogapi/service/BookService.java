@@ -11,6 +11,6 @@ public interface BookService {
     Map<UUID, BookDTO> getAllBooks();
     Optional<BookDTO> getBookById(UUID id);
     BookDTO addBook(BookDTO book);
-    BookDTO updateBook(UUID id, BookDTO book);
+    Optional<BookDTO> updateBook(UUID id, BookDTO book);
     BookDTO deleteBook(UUID id);
 }

@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public BookDTO updateBook(UUID id, BookDTO book) {
+    public Optional<BookDTO> updateBook(UUID id, BookDTO book) {
 
         BookDTO existingBook = books.get(id);
         if(existingBook != null){
