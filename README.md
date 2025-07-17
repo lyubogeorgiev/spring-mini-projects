@@ -19,3 +19,5 @@ Multiple small Spring Boot projects for learning and demonstration.
   | POST   | `/api/books`      | Add new book      |
   | PUT    | `/api/books/{id}` | Update book by ID |
   | DELETE | `/api/books/{id}` | Delete book by ID |
+
+### Student Course Enrollment System
