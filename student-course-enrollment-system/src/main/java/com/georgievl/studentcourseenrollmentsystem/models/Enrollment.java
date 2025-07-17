@@ -10,8 +10,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Enrollment {
-    private UUID uuid;
+    private final UUID uuid = UUID.randomUUID();
     private UUID studentUuid;
     private UUID courseUuid;
-    private final LocalDate enrollmentDate;
+    private final LocalDate enrollmentDate = LocalDate.now();
 }

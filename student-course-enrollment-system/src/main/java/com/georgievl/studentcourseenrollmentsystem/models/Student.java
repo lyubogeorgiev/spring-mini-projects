@@ -10,7 +10,7 @@ import java.util.UUID;
 @Setter
 @Builder
 public class Student {
-    private UUID uuid;
+    private final UUID uuid = UUID.randomUUID();
     private String firstName;
     private String lastName;
 }
