@@ -21,3 +21,14 @@ Multiple small Spring Boot projects for learning and demonstration.
   | DELETE | `/api/books/{id}` | Delete book by ID |
 
 ### Student Course Enrollment System
+
+  | Feature                   | Endpoint                         | Method | Description                |
+  | ------------------------- | -------------------------------- | ------ | -------------------------- |
+  | List all students         | `/api/students`                  | GET    | Fetch all                  |
+  | Create student            | `/api/students`                  | POST   | Add new                    |
+  | Enroll student            | `/api/enrollments`               | POST   | Add enrollment             |
+  | Get student's enrollments | `/api/students/{id}/enrollments` | GET    | View courses for a student |
+  | Unenroll student          | `/api/enrollments/{id}`          | DELETE | Remove enrollment          |
+  | List courses              | `/api/courses`                   | GET    | Fetch all                  |
+  | Add new course            | `/api/courses`                   | POST   | Add new course             |
+
